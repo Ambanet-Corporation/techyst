@@ -9,6 +9,8 @@ if (!API_KEY) {
 
 export async function sendChatToKolosal(messages: KolosalMessage[]): Promise<string> {
   try {
+    const modelID = "meta-llama/llama-4-maverick-17b-128e-instruct";
+
     const response = await fetch(`${BASE_URL}/chat/completions`, {
       method: "POST",
       headers: {
@@ -16,9 +18,10 @@ export async function sendChatToKolosal(messages: KolosalMessage[]): Promise<str
         Authorization: `Bearer ${API_KEY}`,
       },
       body: JSON.stringify({
-        model: "GLM 4.6",
+        model: modelID,
         messages: messages,
         max_tokens: 1000,
+        temperature: 0.5,
       }),
     });
 
@@ -28,7 +31,12 @@ export async function sendChatToKolosal(messages: KolosalMessage[]): Promise<str
     }
 
     const data: KolosalChatResponse = await response.json();
-    return data.choices[0].message.content;
+
+    const content = data.choices?.[0]?.message?.content;
+
+    if (!content) return "";
+    if (typeof content === "string") return content;
+    return JSON.stringify(content);
   } catch (error) {
     console.error("Failed to fetch from Kolosal:", error);
     throw error;

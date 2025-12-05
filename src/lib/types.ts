@@ -1,6 +1,14 @@
+export interface KolosalContentPart {
+  type: "text" | "image_url";
+  text?: string;
+  image_url?: {
+    url: string;
+  };
+}
+
 export interface KolosalMessage {
   role: "system" | "user" | "assistant";
-  content: string;
+  content: string | KolosalContentPart[];
 }
 
 export interface KolosalChatResponse {
