@@ -3,13 +3,14 @@
 import { useState, useRef } from "react";
 import { Upload, Send, Loader2, Cpu, AlertTriangle, CheckCircle2, Wrench } from "lucide-react";
 import { toast } from "sonner";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { useScanHistory } from "@/hooks/use-scan-history";
 
 interface AnalysisResult {
   detected_components: string[];
@@ -35,6 +36,8 @@ export default function ScanPage() {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
+
+  const { addRecord } = useScanHistory();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -65,10 +68,20 @@ export default function ScanPage() {
         throw new Error(data.error || "Gagal menganalisa gambar");
       }
 
+      const reader = new FileReader();
+      reader.readAsDataURL(imageFile);
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        addRecord({
+          imagePreview: base64String,
+          components: data.detected_components,
+          diagnosis: data.diagnosis,
+        });
+      };
+
       setResult(data);
       toast.success("Diagnosa Selesai!");
 
-      // Tambahkan konteks awal ke chat
       setChatMessages([
         {
           role: "assistant",
