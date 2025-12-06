@@ -64,7 +64,6 @@ export async function POST(req: Request) {
       return NextResponse.json(parsedData);
     } catch (parseError) {
       console.error("JSON Parse Error:", parseError);
-      console.error("Raw Output:", cleanResult);
 
       return NextResponse.json({
         detected_components: ["Terdeteksi (Error Format)"],
