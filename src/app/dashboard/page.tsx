@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Activity, ArrowUpRight, Cpu, History, ScanLine, Server, ShieldCheck, Zap, Terminal, Database } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useScanHistory } from "@/hooks/use-scan-history";
@@ -114,8 +115,7 @@ export default function DashboardPage() {
               recentActivity.map((record, i) => (
                 <div key={record.id} className="p-3 rounded-lg bg-white/5 border border-white/5 hover:border-white/10 transition-colors group flex items-center gap-4">
                   <div className="h-10 w-10 rounded bg-slate-900 flex items-center justify-center shrink-0 border border-white/10">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={record.imagePreview} alt="Thumb" className="h-full w-full object-cover rounded opacity-80 group-hover:opacity-100 transition-opacity" />
+                    <Image src={record.imagePreview} alt="Thumb" fill className="object-cover rounded opacity-80 group-hover:opacity-100 transition-opacity" unoptimized />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-bold text-foreground truncate">{record.diagnosis || "Unknown Error"}</p>

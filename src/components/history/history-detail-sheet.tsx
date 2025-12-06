@@ -1,4 +1,5 @@
 import { AlertTriangle, Banknote, Cpu, CheckCircle2, Wrench, Share2, Calendar, Hash, X } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter, SheetClose } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -60,8 +61,8 @@ export function HistoryDetailSheet({ record, onClose }: HistoryDetailSheetProps)
             <div className="flex-1 p-6 space-y-6">
               <div className="rounded-xl overflow-hidden border border-white/10 bg-black relative group shadow-lg">
                 <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none" />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={record.imagePreview} alt="Full Scan" className="w-full h-auto max-h-[350px] object-contain relative z-10 bg-black/50" />
+
+                <Image src={record.imagePreview} alt="Full Scan" width={0} height={0} sizes="100vw" className="w-full h-auto max-h-[350px] object-contain relative z-10 bg-black/50" unoptimized />
                 <div className="absolute bottom-3 left-3 z-20">
                   <Badge variant="secondary" className="bg-black/60 backdrop-blur border border-white/20 text-[10px] font-mono">
                     VISUAL_EVIDENCE

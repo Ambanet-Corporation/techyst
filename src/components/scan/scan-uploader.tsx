@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import Image from "next/image";
 import { ImagePlus, Loader2, Scan, RefreshCw, UploadCloud } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -48,8 +49,7 @@ export function ScanUploader({ previewUrl, isAnalyzing, result, onFileChange, on
           <div className="relative w-full h-full flex items-center justify-center bg-black">
             <div className="absolute inset-0 z-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent" />
 
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={previewUrl} alt="Preview" className="max-h-full max-w-full object-contain relative z-10" />
+            <Image src={previewUrl} alt="Preview" fill className="object-contain relative z-10" unoptimized />
 
             <div className="absolute inset-0 z-20 pointer-events-none">
               <div className="absolute top-4 left-4 text-[10px] font-mono text-primary/70 bg-black/50 px-2 py-1 border border-primary/20">CAM_01 :: ACTIVE</div>

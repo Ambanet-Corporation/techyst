@@ -1,4 +1,5 @@
 import { Calendar, Eye, AlertTriangle, Hash, Clock } from "lucide-react";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { ScanRecord } from "@/hooks/use-scan-history";
@@ -34,8 +35,7 @@ export function HistoryList({ records, onSelect }: HistoryListProps) {
 
           <div className="flex p-4 gap-4">
             <div className="w-24 h-24 shrink-0 rounded-lg overflow-hidden border border-white/10 bg-slate-900 relative">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={record.imagePreview} alt="Scan result" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" />
+              <Image src={record.imagePreview} alt="Scan result" fill className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" unoptimized />
               <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
 
