@@ -91,6 +91,24 @@
   body {
     @apply bg-background text-foreground selection:bg-cyan-500/30 selection:text-cyan-200;
   }
+
+  /* Custom Scrollbar - Webkit */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white/10 rounded-full hover:bg-primary/50 transition-colors;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
 }
 
 @layer utilities {
