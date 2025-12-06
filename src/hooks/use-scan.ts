@@ -178,9 +178,13 @@ export function useScan() {
 
       const data = await response.json();
 
-      if (data.role && data.content) {
-        setChatMessages((prev) => [...prev, { role: "assistant", content: data.content }]);
+      if (!response.ok) {
+        throw new Error(data.error || "Gagal memproses pesan");
       }
+
+      const replyContent = data.content || "Maaf, tidak ada respon dari sistem saat ini.";
+
+      setChatMessages((prev) => [...prev, { role: "assistant", content: replyContent }]);
     } catch (error) {
       toast.error("Gagal Mengirim Pesan", {
         description: "Periksa koneksi internet Anda.",

@@ -9,9 +9,10 @@ if (!API_KEY) {
 
 export async function sendChatToKolosal(messages: KolosalMessage[]): Promise<string> {
   try {
-    const isVisionRequest = messages.some((m) => Array.isArray(m.content));
+    const modelID = "meta-llama/llama-4-maverick-17b-128e-instruct";
 
-    const modelID = isVisionRequest ? "meta-llama/llama-4-maverick-17b-128e-instruct" : "GLM 4.6";
+    console.log("Kolosal Request Model:", modelID);
+    console.log("Kolosal Messages:", JSON.stringify(messages));
 
     const response = await fetch(`${BASE_URL}/chat/completions`, {
       method: "POST",
@@ -31,14 +32,18 @@ export async function sendChatToKolosal(messages: KolosalMessage[]): Promise<str
 
     if (!response.ok) {
       const errorData = await response.text();
-      console.error(`[Kolosal API Error] Status: ${response.status}`, errorData);
+      console.error(`Kolosal API Error Status: ${response.status}`, errorData);
       throw new Error(`Kolosal API Error: ${response.status}`);
     }
 
     const data: KolosalChatResponse = await response.json();
+    console.log("Kolosal Raw Response:", JSON.stringify(data));
 
     const content = data.choices?.[0]?.message?.content;
-    if (!content) return "";
+    if (!content) {
+      console.warn("Kolosal Warning: Empty content received");
+      return "";
+    }
 
     if (typeof content === "string") return content;
     return JSON.stringify(content);
