@@ -9,10 +9,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { compressImage } from "@/lib/utils";
+import { compressImage, cn } from "@/lib/utils";
 import { useScanHistory } from "@/hooks/use-scan-history";
 import { ScanSkeleton } from "@/components/scan-skeleton";
-import { cn } from "@/lib/utils";
 
 interface AnalysisResult {
   detected_components?: string[];
@@ -43,17 +42,37 @@ export default function ScanPage() {
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      try {
-        const compressedFile = await compressImage(file);
-        setImageFile(compressedFile);
-        setPreviewUrl(URL.createObjectURL(compressedFile));
-        setResult(null);
-        setChatMessages([]);
-      } catch (error) {
-        console.error(error);
-        toast.error("Gagal memproses gambar");
-      }
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      toast.error("Format File Tidak Didukung", {
+        description: "Harap upload file gambar (JPG, PNG, WEBP).",
+      });
+      return;
+    }
+
+    if (file.size > 20 * 1024 * 1024) {
+      toast.error("Ukuran File Terlalu Besar", {
+        description: "Maksimal ukuran file adalah 20MB.",
+      });
+      return;
+    }
+
+    try {
+      const compressedFile = await compressImage(file);
+      setImageFile(compressedFile);
+      setPreviewUrl(URL.createObjectURL(compressedFile));
+      setResult(null);
+      setChatMessages([]);
+      toast.info("Foto Siap Dianalisa", {
+        description: "Klik tombol 'Mulai Diagnosa AI' untuk melanjutkan.",
+        duration: 2000,
+      });
+    } catch (error) {
+      console.error(error);
+      toast.error("Gagal Memproses Gambar", {
+        description: "Terjadi kesalahan saat mengompresi gambar. Silakan coba foto lain.",
+      });
     }
   };
 
@@ -90,7 +109,9 @@ export default function ScanPage() {
       };
 
       setResult(data);
-      toast.success("Diagnosa Selesai!");
+      toast.success("Diagnosa Selesai!", {
+        description: "AI telah berhasil menganalisa kerusakan.",
+      });
 
       setChatMessages([
         {
@@ -100,7 +121,9 @@ export default function ScanPage() {
       ]);
     } catch (error) {
       console.error(error);
-      toast.error("Terjadi kesalahan saat analisa.");
+      toast.error("Analisa Gagal", {
+        description: "Terjadi gangguan koneksi ke AI atau format gambar tidak terbaca. Silakan coba lagi.",
+      });
     } finally {
       setIsAnalyzing(false);
     }
@@ -130,7 +153,9 @@ export default function ScanPage() {
         setChatMessages((prev) => [...prev, { role: "assistant", content: data.content }]);
       }
     } catch (error) {
-      toast.error("Gagal mengirim pesan");
+      toast.error("Gagal Mengirim Pesan", {
+        description: "Periksa koneksi internet Anda.",
+      });
     } finally {
       setIsChatting(false);
       setTimeout(() => chatEndRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
