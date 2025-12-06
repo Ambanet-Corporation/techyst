@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
+import { BackgroundGrid } from "@/components/ui/background-grid";
 
 const fontSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -64,7 +65,10 @@ export default function RootLayout({
   return (
     <html lang="id" className="dark">
       <body className={`${fontSans.variable} ${fontMono.variable} antialiased font-sans bg-background text-foreground`}>
-        {children}
+        <BackgroundGrid />
+        <div className="relative z-10">
+          {children}
+        </div>
         <Toaster position="top-center" theme="dark" richColors />
       </body>
     </html>
