@@ -9,7 +9,7 @@ if (!API_KEY) {
 
 export async function sendChatToKolosal(messages: KolosalMessage[]): Promise<string> {
   try {
-    const modelID = "meta-llama/llama-4-maverick-17b-128e-instruct";
+    const modelID = "qwen/qwen3-vl-30b-a3b-instruct";
 
     console.log("Kolosal Request Model:", modelID);
     console.log("Kolosal Messages:", JSON.stringify(messages));
