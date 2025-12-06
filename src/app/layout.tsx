@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Onest } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
-const onest = Onest({
-  variable: "--font-onest",
+const fontSans = Plus_Jakarta_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
 });
 
@@ -58,7 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
-      <body className={`${onest.variable} antialiased font-sans`}>
+      <body className={`${fontSans.variable} antialiased font-sans`}>
         {children}
         <Toaster position="top-center" richColors />
       </body>
