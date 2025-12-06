@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { AlertTriangle, CheckCircle2, Cpu, Wrench, Activity, ChevronRight } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Cpu, Wrench, Activity, ChevronRight, Info } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { AnalysisResult } from "@/hooks/use-scan";
 
@@ -65,6 +65,14 @@ export function ScanResults({ result, children }: ScanResultsProps) {
               </div>
               <p className="text-xs text-muted-foreground font-mono leading-relaxed pl-6">
                 {">"} {result.analysis || "Data stream empty."}
+              </p>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="flex items-start gap-2 p-3 rounded bg-white/5 border border-white/5">
+              <Info className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
+              <p className="text-[10px] text-muted-foreground font-mono leading-tight">
+                <span className="font-bold text-foreground">DISCLAIMER:</span> Hasil analisa AI ini bertujuan sebagai referensi awal (Second Opinion). Selalu verifikasi kerusakan menggunakan alat ukur fisik (Multitester) dan skema resmi
+                sebelum melakukan eksekusi hardware.
               </p>
             </motion.div>
           </div>
