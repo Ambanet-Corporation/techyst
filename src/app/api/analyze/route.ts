@@ -59,7 +59,20 @@ export async function POST(req: Request) {
       .replace(/```/g, "")
       .trim();
 
-    return NextResponse.json(JSON.parse(cleanResult));
+    try {
+      const parsedData = JSON.parse(cleanResult);
+      return NextResponse.json(parsedData);
+    } catch (parseError) {
+      console.error("JSON Parse Error:", parseError);
+      console.error("Raw Output:", cleanResult);
+
+      return NextResponse.json({
+        detected_components: ["Terdeteksi (Error Format)"],
+        analysis: "AI berhasil melihat gambar, namun gagal menyusun laporan terstruktur.",
+        diagnosis: "Terjadi kesalahan format data dari AI.",
+        recommendation: "Silakan coba foto ulang dengan pencahayaan yang lebih baik atau sudut yang berbeda agar AI lebih mudah membaca.",
+      });
+    }
   } catch (error) {
     console.error("Analysis Error:", error);
     return NextResponse.json({ error: "Gagal menganalisa gambar. Pastikan format benar." }, { status: 500 });
