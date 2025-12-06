@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { cn, compressImage } from "@/lib/utils";
 import { useScanHistory } from "@/hooks/use-scan-history";
+import { ScanSkeleton } from "@/components/scan-skeleton";
 
 interface AnalysisResult {
   detected_components: string[];
@@ -192,7 +193,9 @@ export default function ScanPage() {
         </div>
 
         <div className="w-full md:w-7/12 flex flex-col gap-4 h-full overflow-hidden">
-          {result ? (
+          {isAnalyzing ? (
+            <ScanSkeleton />
+          ) : result ? (
             <Card className="flex-1 flex flex-col overflow-hidden shadow-2xl border-none glass">
               <div className="flex-1 overflow-y-auto p-0 scrollbar-thin">
                 <div className="p-6 space-y-6">
