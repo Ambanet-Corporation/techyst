@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, Trash2, Calendar, AlertTriangle, Eye, Wrench, CheckCircle2, Cpu } from "lucide-react";
+import { Search, Trash2, Calendar, AlertTriangle, Eye, Wrench, CheckCircle2, Cpu, Banknote, Share2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter } from "@/components/ui/sheet";
 import { useScanHistory, ScanRecord } from "@/hooks/use-scan-history";
 
 export default function HistoryPage() {
@@ -15,6 +15,24 @@ export default function HistoryPage() {
   const [selectedRecord, setSelectedRecord] = useState<ScanRecord | null>(null);
 
   const filteredHistory = history.filter((record) => record.diagnosis.toLowerCase().includes(searchTerm.toLowerCase()) || record.components.some((c) => c.toLowerCase().includes(searchTerm.toLowerCase())));
+
+  const getPriceEstimate = (text: string) => {
+    const lower = text.toLowerCase();
+    if (lower.includes("ic") || lower.includes("cpu") || lower.includes("emmc") || lower.includes("short")) {
+      return "Rp 250.000 - Rp 500.000";
+    }
+    if (lower.includes("konektor") || lower.includes("lcd") || lower.includes("fleksibel") || lower.includes("usb")) {
+      return "Rp 75.000 - Rp 150.000";
+    }
+    return "Rp 50.000 - Rp 100.000";
+  };
+
+  const handleShare = () => {
+    if (!selectedRecord) return;
+    const estimate = getPriceEstimate(selectedRecord.diagnosis);
+    const text = `*Hasil Diagnosa Techyst*\n\n📅 Tanggal: ${new Date(selectedRecord.date).toLocaleDateString("id-ID")}\n⚠️ Diagnosa: ${selectedRecord.diagnosis}\n💰 Estimasi Biaya: ${estimate}\n\n_Dianalisa oleh AI Techyst_`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
+  };
 
   return (
     <div className="p-6 space-y-6">
@@ -94,71 +112,74 @@ export default function HistoryPage() {
         </CardContent>
       </Card>
 
-      {/* DETAIL SHEET */}
       <Sheet open={!!selectedRecord} onOpenChange={() => setSelectedRecord(null)}>
-        <SheetContent className="overflow-y-auto sm:max-w-xl w-full">
+        <SheetContent className="overflow-y-auto sm:max-w-xl w-full flex flex-col h-full">
           {selectedRecord && (
-            <div className="space-y-6 mt-6">
-              <SheetHeader>
-                <SheetTitle className="flex items-center gap-2 text-xl">
-                  <AlertTriangle className="text-amber-500 h-6 w-6" />
-                  Detail Diagnosa
-                </SheetTitle>
-                <SheetDescription>Dianalisa pada {new Date(selectedRecord.date).toLocaleString("id-ID")}</SheetDescription>
-              </SheetHeader>
+            <>
+              <div className="flex-1 space-y-6 mt-6">
+                <SheetHeader>
+                  <SheetTitle className="flex items-center gap-2 text-xl">
+                    <AlertTriangle className="text-amber-500 h-6 w-6" />
+                    Detail Diagnosa
+                  </SheetTitle>
+                  <SheetDescription>Dianalisa pada {new Date(selectedRecord.date).toLocaleString("id-ID")}</SheetDescription>
+                </SheetHeader>
 
-              <div className="rounded-xl overflow-hidden border border-border">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={selectedRecord.imagePreview} alt="Full Scan" className="w-full h-auto max-h-[300px] object-contain bg-black/5" />
-              </div>
-
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <h4 className="text-sm font-semibold flex items-center gap-2 text-primary">
-                    <Cpu className="h-4 w-4" /> Komponen Terdeteksi
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedRecord.components.map((c, i) => (
-                      <Badge key={i} variant="outline">
-                        {c}
-                      </Badge>
-                    ))}
-                  </div>
+                <div className="rounded-xl overflow-hidden border border-border">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={selectedRecord.imagePreview} alt="Full Scan" className="w-full h-auto max-h-[300px] object-contain bg-black/5" />
                 </div>
 
-                <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20 space-y-1">
-                  <h4 className="text-sm font-bold text-amber-600 dark:text-amber-400">Diagnosa AI</h4>
-                  <p className="text-sm">{selectedRecord.diagnosis}</p>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 space-y-1">
+                      <h4 className="text-xs font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1">
+                        <Banknote className="h-3 w-3" /> ESTIMASI BIAYA
+                      </h4>
+                      <p className="text-sm font-bold">{getPriceEstimate(selectedRecord.diagnosis)}</p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-muted border space-y-1">
+                      <h4 className="text-xs font-bold flex items-center gap-1">
+                        <Cpu className="h-3 w-3" /> KOMPONEN
+                      </h4>
+                      <p className="text-xs text-muted-foreground line-clamp-1">{selectedRecord.components.join(", ")}</p>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20 space-y-1">
+                    <h4 className="text-sm font-bold text-amber-600 dark:text-amber-400">Diagnosa AI</h4>
+                    <p className="text-sm">{selectedRecord.diagnosis}</p>
+                  </div>
+
+                  {selectedRecord.analysis && (
+                    <div className="p-4 rounded-lg bg-muted border space-y-1">
+                      <h4 className="text-sm font-bold flex items-center gap-2">
+                        <CheckCircle2 className="h-4 w-4 text-blue-500" />
+                        Analisa Visual
+                      </h4>
+                      <p className="text-sm text-muted-foreground">{selectedRecord.analysis}</p>
+                    </div>
+                  )}
+
+                  {selectedRecord.recommendation && (
+                    <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20 space-y-1">
+                      <h4 className="text-sm font-bold text-green-600 dark:text-green-400 flex items-center gap-2">
+                        <Wrench className="h-4 w-4" />
+                        Rekomendasi Perbaikan
+                      </h4>
+                      <p className="text-sm">{selectedRecord.recommendation}</p>
+                    </div>
+                  )}
                 </div>
-
-                {/* Tampilkan Analysis & Recommendation jika ada (dari data baru) */}
-                {selectedRecord.analysis && (
-                  <div className="p-4 rounded-lg bg-muted border space-y-1">
-                    <h4 className="text-sm font-bold flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-blue-500" />
-                      Analisa Visual
-                    </h4>
-                    <p className="text-sm text-muted-foreground">{selectedRecord.analysis}</p>
-                  </div>
-                )}
-
-                {selectedRecord.recommendation && (
-                  <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20 space-y-1">
-                    <h4 className="text-sm font-bold text-green-600 dark:text-green-400 flex items-center gap-2">
-                      <Wrench className="h-4 w-4" />
-                      Rekomendasi Perbaikan
-                    </h4>
-                    <p className="text-sm">{selectedRecord.recommendation}</p>
-                  </div>
-                )}
-
-                {!selectedRecord.analysis && (
-                  <div className="p-4 rounded-lg bg-muted/50 border border-dashed text-center">
-                    <p className="text-xs text-muted-foreground">Detail analisa lengkap tidak tersedia untuk riwayat lama.</p>
-                  </div>
-                )}
               </div>
-            </div>
+
+              <SheetFooter className="mt-6 pt-4 border-t">
+                <Button className="w-full bg-green-600 hover:bg-green-700 text-white" onClick={handleShare}>
+                  <Share2 className="mr-2 h-4 w-4" />
+                  Kirim Laporan ke WhatsApp
+                </Button>
+              </SheetFooter>
+            </>
           )}
         </SheetContent>
       </Sheet>
