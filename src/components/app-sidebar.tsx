@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, ScanLine, History, LogOut, Wrench } from "lucide-react";
+import { LayoutDashboard, ScanLine, History, LogOut, Wrench, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -24,6 +24,12 @@ const routes = [
     icon: History,
     href: "/dashboard/history",
     color: "text-amber-500",
+  },
+  {
+    label: "SCHEMATICS",
+    icon: BookOpen,
+    href: "/dashboard/schematics",
+    color: "text-emerald-500",
   },
 ];
 
