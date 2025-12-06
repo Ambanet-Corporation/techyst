@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ScanLine, Cpu, Zap, ArrowRight, ShieldCheck, Activity } from "lucide-react";
+import { ScanLine, Cpu, Zap, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LandingNavbar } from "@/components/landing-navbar";
 

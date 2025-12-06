@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { compressImage } from "@/lib/utils";
 import { useScanHistory } from "@/hooks/use-scan-history";

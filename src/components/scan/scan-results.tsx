@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { AlertTriangle, CheckCircle2, Cpu, Wrench, Activity, ChevronRight, Info } from "lucide-react";
+import { AlertTriangle, Cpu, Wrench, Activity, Info } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { AnalysisResult } from "@/hooks/use-scan";
 
