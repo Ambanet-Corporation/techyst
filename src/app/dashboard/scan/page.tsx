@@ -1,6 +1,6 @@
 "use client";
 
-import { Wrench } from "lucide-react";
+import { ScanLine } from "lucide-react";
 import { ScanSkeleton } from "@/components/scan-skeleton";
 import { useScan } from "@/hooks/use-scan";
 import { ScanUploader } from "@/components/scan/scan-uploader";
@@ -25,12 +25,20 @@ export default function ScanPage() {
           </ScanResults>
         ) : (
           <div className="w-full md:w-7/12 flex flex-col gap-4 h-full overflow-hidden">
-            <div className="flex-1 flex flex-col items-center justify-center text-center p-8 border-2 border-dashed border-muted-foreground/20 rounded-xl bg-muted/5 glass">
-              <div className="p-6 bg-muted/50 rounded-full mb-6 animate-pulse">
-                <Wrench className="w-12 h-12 text-muted-foreground/30" />
+            <div className="flex-1 flex flex-col items-center justify-center text-center p-8 border border-dashed border-white/10 rounded-xl bg-slate-950/30 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-grid-pattern opacity-20" />
+
+              <div className="p-6 bg-white/5 rounded-full mb-6 relative group-hover:scale-110 transition-transform duration-500 border border-white/5">
+                <ScanLine className="w-12 h-12 text-muted-foreground/50 group-hover:text-primary transition-colors" />
+                <div className="absolute inset-0 rounded-full border border-primary/20 scale-125 animate-pulse opacity-0 group-hover:opacity-100" />
               </div>
-              <h3 className="text-xl font-bold">Area Kerja Kosong</h3>
-              <p className="text-muted-foreground text-sm max-w-xs mx-auto mt-2 mb-6">Upload foto mesin HP di panel sebelah kiri untuk memulai diagnosa canggih.</p>
+
+              <h3 className="text-xl font-bold font-sans tracking-tight text-foreground">WORKSTATION STANDBY</h3>
+              <p className="text-muted-foreground text-xs font-mono mt-2 max-w-xs mx-auto">
+                WAITING FOR INPUT STREAM...
+                <br />
+                PLEASE INITIALIZE SCAN SEQUENCE.
+              </p>
             </div>
           </div>
         )}
