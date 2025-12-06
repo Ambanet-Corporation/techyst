@@ -21,10 +21,10 @@ export function MobileNav() {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="md:hidden">
-          <Menu />
+          <Menu className="text-white" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="p-0 bg-slate-900 border-none text-white">
+      <SheetContent side="left" className="p-0 bg-background/80 backdrop-blur-xl border-r border-white/10 text-white w-72">
         <SheetTitle className="sr-only">Mobile Navigation</SheetTitle>
         <AppSidebar />
       </SheetContent>
