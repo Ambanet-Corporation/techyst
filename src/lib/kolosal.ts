@@ -9,7 +9,7 @@ if (!API_KEY) {
 
 export async function sendChatToKolosal(messages: KolosalMessage[]): Promise<string> {
   try {
-    const modelID = "qwen/qwen3-vl-30b-a3b-instruct";
+    const modelID = "global.anthropic.claude-sonnet-4-5-20250929-v1:0";
 
     console.log("Kolosal Request Model:", modelID);
     console.log("Kolosal Messages:", JSON.stringify(messages));
