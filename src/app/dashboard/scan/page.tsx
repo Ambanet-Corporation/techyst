@@ -76,6 +76,8 @@ export default function ScanPage() {
           imagePreview: base64String,
           components: data.detected_components,
           diagnosis: data.diagnosis,
+          analysis: data.analysis,
+          recommendation: data.recommendation,
         });
       };
 
@@ -269,7 +271,7 @@ export default function ScanPage() {
             </div>
           )}
         </div>
-      </div>
+      </div>  
     </div>
   );
 }
