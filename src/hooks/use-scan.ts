@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { toast } from "sonner";
 import { compressImage } from "@/lib/utils";
 import { useScanHistory } from "@/hooks/use-scan-history";
@@ -24,8 +24,45 @@ export function useScan() {
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [isChatting, setIsChatting] = useState(false);
+  const [isRestored, setIsRestored] = useState(false);
 
   const { addRecord } = useScanHistory();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const savedChat = sessionStorage.getItem("techyst_chat_session");
+        const savedResult = sessionStorage.getItem("techyst_result_session");
+
+        if (savedChat) {
+          setChatMessages(JSON.parse(savedChat));
+        }
+        if (savedResult) {
+          setResult(JSON.parse(savedResult));
+        }
+      } catch (error) {
+        console.error("Gagal memulihkan sesi:", error);
+      } finally {
+        setIsRestored(true);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && isRestored) {
+      if (chatMessages.length > 0) {
+        sessionStorage.setItem("techyst_chat_session", JSON.stringify(chatMessages));
+      } else {
+        sessionStorage.removeItem("techyst_chat_session");
+      }
+
+      if (result) {
+        sessionStorage.setItem("techyst_result_session", JSON.stringify(result));
+      } else {
+        sessionStorage.removeItem("techyst_result_session");
+      }
+    }
+  }, [chatMessages, result, isRestored]);
 
   const handleFileChange = async (file: File | undefined) => {
     if (!file) return;
@@ -66,6 +103,8 @@ export function useScan() {
     setPreviewUrl(null);
     setImageFile(null);
     setResult(null);
+    setChatMessages([]);
+    setIsChatting(false);
   };
 
   const handleAnalyze = async () => {
