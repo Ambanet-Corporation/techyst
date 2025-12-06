@@ -8,6 +8,8 @@ export interface ScanRecord {
   imagePreview: string;
   components: string[];
   diagnosis: string;
+  analysis?: string;
+  recommendation?: string;
 }
 
 const STORAGE_KEY = "techyst_history";
