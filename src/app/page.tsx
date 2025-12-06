@@ -1,132 +1,122 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Activity, Smartphone, Wrench, History, Zap, ShieldCheck } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { ScanLine, Cpu, Zap, ArrowRight, ShieldCheck, Activity } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useScanHistory } from "@/hooks/use-scan-history";
+import { LandingNavbar } from "@/components/landing-navbar";
 
-export default function DashboardPage() {
-  const { history } = useScanHistory();
-  const lastDiagnosis = history.length > 0 ? history[0] : null;
-
+export default function LandingPage() {
   return (
-    <div className="p-6 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400">Dashboard Teknisi</h2>
-          <p className="text-muted-foreground mt-1 text-lg">Pantau performa dan diagnosa harian Anda.</p>
+    <main className="min-h-screen flex flex-col relative overflow-hidden">
+      <LandingNavbar />
+
+      <section className="flex-1 flex flex-col items-center justify-center pt-32 pb-20 px-4 relative z-10">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-primary/10 rounded-full blur-[120px] -z-10 opacity-50" />
+
+        <div className="container mx-auto max-w-6xl text-center space-y-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono mb-4"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+            </span>
+            SYSTEM_ONLINE :: V2.0.4
+          </motion.div>
+
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
+            Mata Kedua untuk <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-300 text-glow">Teknisi Indonesia</span>
+          </motion.h1>
+
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+            Platform diagnosa kerusakan HP berbasis AI Vision. Deteksi jalur putus, IC rusak, dan anomali komponen dalam hitungan detik.
+          </motion.p>
+
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <Link href="/dashboard/scan">
+              <Button size="lg" className="h-14 px-8 text-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-[0_0_30px_rgba(6,182,212,0.4)] border border-primary/50 rounded-none clip-path-polygon">
+                <ScanLine className="mr-2 h-5 w-5" />
+                SCAN SEKARANG
+              </Button>
+            </Link>
+            <Link href="/dashboard">
+              <Button variant="outline" size="lg" className="h-14 px-8 text-lg border-white/10 hover:bg-white/5 hover:text-white rounded-none">
+                Lihat Dashboard
+              </Button>
+            </Link>
+          </motion.div>
         </div>
-        <Button asChild size="lg" className="shadow-lg shadow-blue-500/20 bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white border-none">
-          <Link href="/dashboard/scan">
-            <Zap className="mr-2 h-5 w-5" />
-            Mulai Diagnosa Baru
-          </Link>
-        </Button>
-      </div>
 
-      <div className="grid gap-6 md:grid-cols-3">
-        <Card className="glass glass-hover overflow-hidden relative border-l-4 border-l-blue-500">
-          <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl" />
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Total Diagnosa</CardTitle>
-            <Activity className="h-5 w-5 text-blue-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-4xl font-bold">{history.length}</div>
-            <p className="text-xs text-muted-foreground mt-1">Kali penggunaan AI bulan ini</p>
-          </CardContent>
-        </Card>
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.5 }} className="container mx-auto max-w-5xl mt-20 relative">
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10" />
+          <div className="cyber-glass rounded-xl overflow-hidden border border-white/10 p-1">
+            <div className="bg-slate-950/80 rounded-lg overflow-hidden relative aspect-video flex items-center justify-center group">
+              <div className="absolute inset-0 bg-[url('/demo/scan-preview.png')] bg-cover bg-center opacity-50 group-hover:opacity-70 transition-opacity duration-700" />
 
-        <Card className="glass glass-hover overflow-hidden relative border-l-4 border-l-violet-500">
-          <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-violet-500/10 rounded-full blur-2xl" />
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Model AI Aktif</CardTitle>
-            <Smartphone className="h-5 w-5 text-violet-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">Llama 4 Vision</div>
-            <p className="text-xs text-muted-foreground mt-1">Mode: High Precision Reasoning</p>
-          </CardContent>
-        </Card>
-
-        <Card className="glass glass-hover overflow-hidden relative border-l-4 border-l-green-500">
-          <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-green-500/10 rounded-full blur-2xl" />
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Status Sistem</CardTitle>
-            <ShieldCheck className="h-5 w-5 text-green-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-500">Optimal</div>
-            <p className="text-xs text-muted-foreground mt-1">API Latency: 45ms</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-7">
-        <Card className="col-span-4 glass border-none shadow-xl">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <History className="h-5 w-5 text-primary" />
-              Aktivitas Terakhir
-            </CardTitle>
-            <CardDescription>Diagnosa terbaru yang berhasil diselesaikan.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {lastDiagnosis ? (
-              <div className="flex items-center gap-4 p-4 border rounded-xl bg-background/50 backdrop-blur-sm hover:bg-background/80 transition cursor-pointer">
-                <div className="h-20 w-20 rounded-lg overflow-hidden bg-muted shrink-0 border shadow-sm">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={lastDiagnosis.imagePreview} alt="Last scan" className="h-full w-full object-cover" />
+              <div className="relative z-20 flex flex-col items-center gap-4">
+                <div className="h-20 w-20 rounded-full border-2 border-primary/50 flex items-center justify-center relative">
+                  <div className="absolute inset-0 border-2 border-primary rounded-full animate-ping opacity-20" />
+                  <ScanLine className="h-8 w-8 text-primary" />
                 </div>
-                <div className="flex-1 space-y-2">
-                  <p className="font-bold text-lg leading-none line-clamp-1">{lastDiagnosis.diagnosis}</p>
-                  <p className="text-sm text-muted-foreground flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-green-500" />
-                    {new Date(lastDiagnosis.date).toLocaleDateString("id-ID", {
-                      weekday: "long",
-                      day: "numeric",
-                      month: "long",
-                      year: "numeric",
-                    })}
-                  </p>
-                </div>
-                <Button variant="secondary" asChild>
-                  <Link href="/dashboard/history">Detail</Link>
-                </Button>
+                <div className="bg-black/50 backdrop-blur px-4 py-2 rounded-full border border-white/10 text-xs font-mono text-cyan-400">AI_VISION_MODULE :: ACTIVE</div>
               </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground bg-muted/20 rounded-xl border border-dashed">
-                <div className="p-4 bg-muted/50 rounded-full mb-3">
-                  <Wrench className="h-8 w-8 opacity-50" />
+
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 animate-scan" />
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      <section className="py-24 border-t border-white/5 relative bg-slate-950/50">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: Cpu,
+                title: "Deteksi Komponen",
+                desc: "Mengenali IC Power, CPU, EMMC, dan jalur vital secara otomatis dengan presisi tinggi.",
+                color: "text-blue-400",
+              },
+              {
+                icon: Zap,
+                title: "Diagnosa Instan",
+                desc: "Tak perlu menebak. Dapatkan rekomendasi perbaikan berbasis data dalam < 5 detik.",
+                color: "text-yellow-400",
+              },
+              {
+                icon: ShieldCheck,
+                title: "Database Terpercaya",
+                desc: "Dilatih dengan ribuan dataset kerusakan HP populer di pasar Indonesia.",
+                color: "text-green-400",
+              },
+            ].map((feature, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="p-6 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 hover:border-primary/30 transition-all duration-300 group"
+              >
+                <div className={`h-12 w-12 rounded-lg bg-slate-900 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 ${feature.color}`}>
+                  <feature.icon className="h-6 w-6" />
                 </div>
-                <p className="font-medium">Belum ada riwayat perbaikan</p>
-                <Button variant="link" asChild className="mt-2 text-primary">
-                  <Link href="/dashboard/scan">Mulai Scan Pertama</Link>
-                </Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+                <h3 className="text-xl font-bold mb-2 font-sans">{feature.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        <Card className="col-span-3 bg-gradient-to-br from-slate-900 to-slate-800 text-white border-none shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl -mr-16 -mt-16" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet-500/20 rounded-full blur-3xl -ml-16 -mb-16" />
-
-          <CardHeader className="relative z-10">
-            <CardTitle className="text-xl">Tips Suhu 🛠️</CardTitle>
-            <CardDescription className="text-slate-300">Maksimalkan fitur AI Assistant</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6 relative z-10">
-            <p className="text-sm leading-relaxed text-slate-300">
-              &ldquo;Jangan ragu bertanya hal teknis mendalam. AI Techyst dilatih membaca skematik dan mengenali jalur tegangan. Coba tanya: <span className="italic text-white">&apos;Jalur V-Bat ke mana saja?&apos;</span>&rdquo;
-            </p>
-            <Button variant="default" className="w-full bg-white text-slate-900 hover:bg-slate-200 font-bold" asChild>
-              <Link href="/dashboard/scan">Konsultasi Sekarang</Link>
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+      <footer className="py-8 border-t border-white/5 text-center text-muted-foreground text-sm font-mono">
+        <p>Techyst © 2025. All rights reserved.</p>
+      </footer>
+    </main>
   );
 }
