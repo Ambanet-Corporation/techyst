@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { cn, compressImage } from "@/lib/utils";
 import { useScanHistory } from "@/hooks/use-scan-history";
 
 interface AnalysisResult {
@@ -39,13 +39,19 @@ export default function ScanPage() {
 
   const { addRecord } = useScanHistory();
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImageFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
-      setResult(null);
-      setChatMessages([]);
+      try {
+        const compressedFile = await compressImage(file);
+        setImageFile(compressedFile);
+        setPreviewUrl(URL.createObjectURL(compressedFile));
+        setResult(null);
+        setChatMessages([]);
+      } catch (error) {
+        console.error(error);
+        toast.error("Gagal memproses gambar");
+      }
     }
   };
 
