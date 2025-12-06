@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Upload, Send, Loader2, Cpu, AlertTriangle, CheckCircle2, Wrench, Sparkles, ImagePlus } from "lucide-react";
+import { Send, Loader2, Cpu, AlertTriangle, CheckCircle2, Wrench, Sparkles, ImagePlus } from "lucide-react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 
@@ -9,15 +9,16 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { cn, compressImage } from "@/lib/utils";
+import { compressImage } from "@/lib/utils";
 import { useScanHistory } from "@/hooks/use-scan-history";
 import { ScanSkeleton } from "@/components/scan-skeleton";
+import { cn } from "@/lib/utils";
 
 interface AnalysisResult {
-  detected_components: string[];
-  analysis: string;
-  diagnosis: string;
-  recommendation: string;
+  detected_components?: string[];
+  analysis?: string;
+  diagnosis?: string;
+  recommendation?: string;
 }
 
 interface ChatMessage {
@@ -81,10 +82,10 @@ export default function ScanPage() {
         const base64String = reader.result as string;
         addRecord({
           imagePreview: base64String,
-          components: data.detected_components,
-          diagnosis: data.diagnosis,
-          analysis: data.analysis,
-          recommendation: data.recommendation,
+          components: data.detected_components || [],
+          diagnosis: data.diagnosis || "Tidak ada diagnosa spesifik",
+          analysis: data.analysis || "",
+          recommendation: data.recommendation || "",
         });
       };
 
@@ -94,7 +95,7 @@ export default function ScanPage() {
       setChatMessages([
         {
           role: "assistant",
-          content: `Saya sudah menganalisa board ini. ${data.diagnosis} Ada yang mau ditanyakan detailnya?`,
+          content: `Saya sudah menganalisa board ini. ${data.diagnosis || ""} Ada yang mau ditanyakan detailnya?`,
         },
       ]);
     } catch (error) {
@@ -205,11 +206,12 @@ export default function ScanPage() {
                       <h3>Komponen Terdeteksi</h3>
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      {result.detected_components.map((comp, i) => (
+                      {(result.detected_components || []).map((comp, i) => (
                         <Badge key={i} variant="outline" className="px-3 py-1 text-sm bg-background/50 backdrop-blur-sm">
                           {comp}
                         </Badge>
                       ))}
+                      {(!result.detected_components || result.detected_components.length === 0) && <span className="text-sm text-muted-foreground italic">Tidak ada komponen spesifik terdeteksi</span>}
                     </div>
                   </motion.div>
 
@@ -224,7 +226,7 @@ export default function ScanPage() {
                         <AlertTriangle className="h-5 w-5" />
                         <h4>Diagnosa Kerusakan</h4>
                       </div>
-                      <p className="text-sm leading-relaxed opacity-90">{result.diagnosis}</p>
+                      <p className="text-sm leading-relaxed opacity-90">{result.diagnosis || "Tidak ada data diagnosa"}</p>
                     </motion.div>
 
                     <motion.div
@@ -237,7 +239,7 @@ export default function ScanPage() {
                         <Wrench className="h-5 w-5" />
                         <h4>Rekomendasi Perbaikan</h4>
                       </div>
-                      <p className="text-sm leading-relaxed opacity-90">{result.recommendation}</p>
+                      <p className="text-sm leading-relaxed opacity-90">{result.recommendation || "Tidak ada rekomendasi"}</p>
                     </motion.div>
                   </div>
 
@@ -246,7 +248,7 @@ export default function ScanPage() {
                       <CheckCircle2 className="h-5 w-5" />
                       <h4>Analisa Visual</h4>
                     </div>
-                    <p className="text-sm text-muted-foreground">{result.analysis}</p>
+                    <p className="text-sm text-muted-foreground">{result.analysis || "Analisa visual tidak tersedia"}</p>
                   </motion.div>
                 </div>
 

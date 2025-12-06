@@ -14,10 +14,14 @@ export default function HistoryPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRecord, setSelectedRecord] = useState<ScanRecord | null>(null);
 
-  const filteredHistory = history.filter((record) => record.diagnosis.toLowerCase().includes(searchTerm.toLowerCase()) || record.components.some((c) => c.toLowerCase().includes(searchTerm.toLowerCase())));
+  const filteredHistory = history.filter((record) => {
+    const diagnosisMatch = (record.diagnosis || "").toLowerCase().includes(searchTerm.toLowerCase());
+    const componentsMatch = (record.components || []).some((c) => (c || "").toLowerCase().includes(searchTerm.toLowerCase()));
+    return diagnosisMatch || componentsMatch;
+  });
 
   const getPriceEstimate = (text: string) => {
-    const lower = text.toLowerCase();
+    const lower = (text || "").toLowerCase();
     if (lower.includes("ic") || lower.includes("cpu") || lower.includes("emmc") || lower.includes("short")) {
       return "Rp 250.000 - Rp 500.000";
     }
@@ -88,19 +92,19 @@ export default function HistoryPage() {
                   <CardHeader className="p-4 pb-2">
                     <CardTitle className="text-base font-bold line-clamp-2 flex items-start gap-2 min-h-[3rem]">
                       <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0 mt-1" />
-                      {record.diagnosis}
+                      {record.diagnosis || "Tanpa Judul Diagnosa"}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="p-4 pt-2">
                     <div className="flex flex-wrap gap-1">
-                      {record.components.slice(0, 3).map((comp, i) => (
+                      {(record.components || []).slice(0, 3).map((comp, i) => (
                         <Badge key={i} variant="secondary" className="text-[10px] h-5">
                           {comp}
                         </Badge>
                       ))}
-                      {record.components.length > 3 && (
+                      {(record.components || []).length > 3 && (
                         <Badge variant="outline" className="text-[10px] h-5">
-                          +{record.components.length - 3}
+                          +{(record.components || []).length - 3}
                         </Badge>
                       )}
                     </div>
@@ -142,7 +146,7 @@ export default function HistoryPage() {
                       <h4 className="text-xs font-bold flex items-center gap-1">
                         <Cpu className="h-3 w-3" /> KOMPONEN
                       </h4>
-                      <p className="text-xs text-muted-foreground line-clamp-1">{selectedRecord.components.join(", ")}</p>
+                      <p className="text-xs text-muted-foreground line-clamp-1">{(selectedRecord.components || []).join(", ")}</p>
                     </div>
                   </div>
 
