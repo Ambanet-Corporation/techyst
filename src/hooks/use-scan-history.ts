@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { get, set, del } from "idb-keyval";
 
 export interface ScanRecord {
   id: string;
@@ -16,16 +17,13 @@ const STORAGE_KEY = "techyst_history";
 
 export function useScanHistory() {
   const [history, setHistory] = useState<ScanRecord[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        setHistory(JSON.parse(stored));
-      } catch (e) {
-        console.error(e);
-      }
-    }
+    get(STORAGE_KEY).then((val) => {
+      if (val) setHistory(val);
+      setIsLoading(false);
+    });
   }, []);
 
   const addRecord = (record: Omit<ScanRecord, "id" | "date">) => {
@@ -37,13 +35,13 @@ export function useScanHistory() {
 
     const updatedHistory = [newRecord, ...history];
     setHistory(updatedHistory);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedHistory));
+    set(STORAGE_KEY, updatedHistory);
   };
 
   const clearHistory = () => {
     setHistory([]);
-    localStorage.removeItem(STORAGE_KEY);
+    del(STORAGE_KEY);
   };
 
-  return { history, addRecord, clearHistory };
+  return { history, addRecord, clearHistory, isLoading };
 }
