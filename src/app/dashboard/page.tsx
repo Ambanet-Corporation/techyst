@@ -73,7 +73,8 @@ export default function DashboardPage() {
             <div className="w-full bg-white/5 rounded-full h-1 mt-4 overflow-hidden">
               <div className="bg-green-500 h-full w-[98%] shadow-[0_0_10px_#22c55e]" />
             </div>
-            <p className="text-xs font-mono text-muted-foreground mt-2">UPTIME: 48H 12M • SERVER: ASIA-JKT-01</p>
+            
+            <p className="text-xs font-mono text-muted-foreground mt-2">UPTIME: 48H 12M • SERVER: ASIA-JKT-01</p> {/* Dummy Uptime */}
           </div>
           <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none" />
         </motion.div>
@@ -92,7 +93,7 @@ export default function DashboardPage() {
             <Cpu className="h-5 w-5" />
             <span className="text-xs font-mono font-bold">AI ENGINE</span>
           </div>
-          <p className="text-2xl font-bold text-foreground">Llama 4</p>
+          <p className="text-2xl font-bold text-foreground">Claude Sonnet 4.5</p>
           <div className="flex items-center gap-2 mt-2">
             <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-violet-500/20 text-violet-300 border border-violet-500/30">VISION</span>
             <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-violet-500/20 text-violet-300 border border-violet-500/30">NLP</span>
