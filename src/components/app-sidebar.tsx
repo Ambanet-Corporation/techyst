@@ -40,12 +40,13 @@ export function AppSidebar() {
     <div className="space-y-4 py-4 flex flex-col h-full bg-card/30 border-r border-white/5 backdrop-blur-xl">
       <div className="px-6 py-6 flex-1">
         <Link href="/dashboard" className="flex items-center pl-2 mb-10 group">
-          <div className="relative w-8 h-8 mr-4 flex items-center justify-center rounded bg-primary/10 border border-primary/20 group-hover:border-primary/50 transition-colors">
+          {/* <div className="relative w-8 h-8 mr-4 flex items-center justify-center rounded bg-primary/10 border border-primary/20 group-hover:border-primary/50 transition-colors">
             <Wrench className="w-5 h-5 text-primary" />
-          </div>
+          </div> */}
           <div>
-            <h1 className="text-xl font-bold tracking-wider font-sans text-foreground">TECHYST</h1>
-            <p className="text-[10px] text-muted-foreground font-mono tracking-widest">V2.0</p>
+            <img className="px-2" src="/logo.png" alt="logo" width={180}/>
+            {/* <h1 className="text-xl font-bold tracking-wider font-sans text-foreground">TECHYST</h1> */}
+            {/* <p className="text-[10px] text-muted-foreground font-mono tracking-widest">V2.0</p> */}
           </div>
         </Link>
 
