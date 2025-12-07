@@ -1,88 +1,120 @@
-# Techyst 
+# Techyst
 
-**Asisten Digital Pintar untuk Teknisi Handphone Indonesia**
+<div align="center">
+
+![Techyst Logo](public/logo.png)
+
+**Mata Kedua untuk Teknisi Handphone Indonesia**
+
+<br />
 
 [![Tech Stack](https://img.shields.io/badge/Next.js-16-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![UI Framework](https://img.shields.io/badge/Shadcn-UI-000000?style=flat&logo=shadcnui)](https://ui.shadcn.com/)
 [![AI Power](https://img.shields.io/badge/Powered_by-Kolosal_AI-blue?style=flat)](https://kolosal.ai/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
->  **Inovasi AI: Mendorong Usaha Lokal dengan AI Inklusif**
+**Inovasi AI: Mendorong Usaha Lokal dengan AI Inklusif**
 
-![Dashboard Preview](/demo/dashboard.png)
+[🎬 Lihat Video Demo](#) · [🚀 Coba Live Demo](https://techyst.vercel.app)
 
-##  Latar Belakang Masalah
-Di Indonesia, ribuan teknisi HP (UMKM) bekerja secara otodidak. Tantangan terbesar mereka adalah:
-1.  **Motherboard Baru:** Sulit mengenali letak komponen pada HP model terbaru.
-2.  **Diagnosa Visual:** Kesulitan membedakan antara korosi ringan atau jalur putus.
-3.  **Keterbatasan Mentor:** Tidak punya tempat bertanya saat mentok (stuck).
+<br />
 
-**Techyst hadir sebagai solusi.** Aplikasi ini menggunakan **AI Vision (Llama 4)** untuk "melihat" kerusakan pada PCB dan **Chatbot Teknisi (GLM 4.6)** yang dilatih dengan "Bahasa Bengkel" untuk memandu perbaikan langkah demi langkah.
+![Dashboard Preview](public/demo/dashboard.png)
+
+</div>
+
+<br />
+
+## Latar Belakang Masalah
+
+Di Indonesia, ribuan teknisi HP (UMKM) bekerja secara otodidak dengan peralatan terbatas. Tantangan terbesar mereka adalah:
+
+1.  **Motherboard Baru:** Sulit mengenali letak komponen pada HP model terbaru yang skemanya belum tersebar.
+2.  **Diagnosa Visual:** Kesulitan membedakan antara korosi mikroskopis, jalur putus, atau _short_ halus.
+3.  **Keterbatasan Mentor:** Tidak punya tempat bertanya yang responsif saat mengalami kebuntuan (_stuck_).
+
+**Techyst hadir sebagai solusi.** Aplikasi ini bertindak sebagai "Asisten Senior Digital" yang menggunakan **Advanced AI Reasoning** untuk mendiagnosa kerusakan hardware dan memandu perbaikan.
 
 ---
 
-##  Fitur Unggulan
+## Fitur Unggulan
 
-### 1. AI Visual Diagnosis 📷
+### 1. Advanced Reasoning Engine
+
+Kami menggunakan **Claude Sonnet 4.5** sebagai otak tunggal sistem. Model ini dipilih karena kemampuan _reasoning_ (penalaran) spasial dan logikanya yang superior, memungkinkannya menganalisa jalur PCB yang rumit dan memberikan saran perbaikan yang sangat akurat.
+
+### 2. AI Visual Diagnosis
+
 Upload foto mesin HP, dan AI akan secara otomatis:
-* Mendeteksi komponen vital (CPU, EMMC, Power IC).
-* Menganalisa kondisi fisik (Korosi, Gosong, Jalur Putus).
-* Memberikan rekomendasi tindakan awal (Reball, Ganti IC, Jumper).
 
-### 2. Konsultasi "Suhu" AI 💬
-Chatbot yang bertindak sebagai Teknisi Senior.
-* **Context Aware:** Mengerti konteks dari gambar yang sedang dibahas.
-* **Local Lingo:** Menggunakan istilah teknis lapangan (Amper gantung, Short halus, Congkel).
-* **Fast Response:** Menjawab pertanyaan troubleshooting dalam hitungan detik.
+- Mendeteksi komponen vital (CPU, EMMC, Power IC).
+- Menganalisa kondisi fisik (Korosi, Gosong, Jalur Putus).
+- Memberikan rekomendasi tindakan awal (Reball, Ganti IC, Jumper).
 
-### 3. Riwayat Servis Lokal 📂
-Semua data diagnosa tersimpan aman di browser (LocalStorage).
-* Tidak perlu login/database berat.
-* Privasi terjaga.
-* Akses kembali hasil scan lama kapan saja.
+### 3. Privacy-First Architecture
+
+Kami peduli pada kerahasiaan data servis teknisi.
+
+- **Local Storage Persistence:** Semua riwayat foto dan diagnosa disimpan di browser pengguna (IndexedDB/LocalStorage).
+- **No Cloud Database:** Kami tidak menyimpan foto board pelanggan Anda di server kami. Privasi 100% di tangan Anda.
 
 ---
 
-##  Arsitektur & Teknologi
+## Arsitektur & Teknologi
 
 Aplikasi ini dibangun dengan prinsip **Performance First** dan **Inclusive Design**.
 
-* **Frontend:** Next.js 16 (App Router), TypeScript, Tailwind CSS.
-* **UI Library:** Shadcn UI + Framer Motion (Animasi halus).
-* **AI Backend:** Kolosal AI.
-* **Storage:** LocalStorage (Client-side persistence).
+- **Frontend:** Next.js 16 (App Router), TypeScript.
+- **Styling:** Tailwind CSS v4, Shadcn UI, Framer Motion (Animasi).
+- **AI Integration:** Kolosal AI SDK (Claude Sonnet 4.5).
+- **Storage:** `idb-keyval` (Client-side IndexedDB wrapper).
+- **Optimization:** `browser-image-compression` untuk upload hemat kuota.
 
 ---
 
-##  Cara Install & Jalankan
+## Galeri Screenshot
+
+|           Halaman Scan AI (Upload)            |            Hasil Diagnosa & Chat            |
+| :-------------------------------------------: | :-----------------------------------------: |
+| ![Scan Preview](public/demo/scan-preview.png) | ![Scan Result](public/demo/scan-result.png) |
+
+---
+
+## Cara Install & Jalankan (Lokal)
 
 Ikuti langkah ini untuk menjalankan Techyst di komputer lokal Anda.
 
 ### Prasyarat
-* Node.js 18+ terinstall.
-* Package manager `pnpm` (disarankan), `npm`, atau `yarn`.
-* API Key dari [Kolosal.ai](https://kolosal.ai).
+
+- Node.js 18+ terinstall.
+- Package manager `pnpm` (disarankan), `npm`, atau `yarn`.
+- API Key dari [Kolosal.ai](https://kolosal.ai).
 
 ### Langkah Instalasi
 
 1.  **Clone Repository**
+
     ```bash
-    git clone [https://github.com/username/techyst.git](https://github.com/username/techyst.git)
+    git clone https://github.com/Ambanet-Corporation/techyst.git
     cd techyst
     ```
 
 2.  **Install Dependencies**
+
     ```bash
     pnpm install
     ```
 
 3.  **Setup Environment Variables**
-    Buat file `.env` di root folder, lalu isi dengan API Key Anda:
+    Salin file `.env.example` menjadi `.env` di root folder, lalu isi API Key:
+
     ```env
     KOLOSAL_API_KEY=masukkan_api_key_kolosal_disini
-    KOLOSAL_BASE_URL=https://api.kolosal.ai/v1
+    KOLOSAL_BASE_URL=[https://api.kolosal.ai/v1](https://api.kolosal.ai/v1)
     ```
 
 4.  **Jalankan Server Development**
+
     ```bash
     pnpm dev
     ```
@@ -92,10 +124,12 @@ Ikuti langkah ini untuk menjalankan Techyst di komputer lokal Anda.
 
 ---
 
-## 📸 Galeri Screenshot
+## ⚠️ Disclaimer
 
-| Halaman Scan AI | Hasil Diagnosa |
-| :---: | :---: |
-| ![Scan](/demo/scan-preview.png) | ![Result](/demo/scan-result.png) |
+_Techyst adalah alat bantu diagnosa (Second Opinion). Hasil analisa AI memiliki kemungkinan kesalahan (hallucination). Teknisi wajib memverifikasi kerusakan menggunakan alat ukur fisik (Multitester/Oscilloscope) dan skema resmi sebelum melakukan eksekusi hardware._
 
 ---
+
+<div align="center">
+  <p>© 2025 Ambanet Corporation.  All rights reserved.</p>
+</div>
