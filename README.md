@@ -82,12 +82,7 @@ Aplikasi ini dibangun dengan prinsip **Performance First** dan **Inclusive Desig
 
 ## Video Demo
 
-<div align="center">
-  <video width="100%" controls>
-    <source src="public/demo/techyst-demo.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>
+[![Watch the video](https://img.youtube.com/vi/hKmbgndoItY/maxresdefault.jpg)](https://youtu.be/T-D1KVIuvjA)
 
 ---
 
