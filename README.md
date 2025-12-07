@@ -82,7 +82,7 @@ Aplikasi ini dibangun dengan prinsip **Performance First** dan **Inclusive Desig
 
 ## Video Demo
 
-[![Watch the video](https://img.youtube.com/vi/hKmbgndoItY/maxresdefault.jpg)](https://youtu.be/T-D1KVIuvjA)
+[![Watch the video](https://img.youtube.com/vi/hKmbgndoItY/maxresdefault.jpg)](https://youtu.be/hKmbgndoItY)
 
 ---
 
