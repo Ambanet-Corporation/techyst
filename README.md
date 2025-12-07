@@ -15,7 +15,7 @@
 
 **Inovasi AI: Mendorong Usaha Lokal dengan AI Inklusif**
 
-[🎬 Lihat Video Demo](#) · [🚀 Coba Live Demo](https://techyst.vercel.app)
+[🚀 Coba Live Demo](https://techyst.vercel.app)
 
 <br />
 
