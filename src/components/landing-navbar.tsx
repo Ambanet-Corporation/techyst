@@ -9,13 +9,14 @@ export function LandingNavbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-background/50 backdrop-blur-md">
       <div className="container mx-auto px-6 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 border border-primary/20">
+          {/* <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 border border-primary/20">
             <Wrench className="h-5 w-5 text-primary" />
             <div className="absolute inset-0 bg-primary/20 blur-lg" />
-          </div>
-          <span className="text-xl font-bold tracking-tight text-foreground font-sans">
+          </div> */}
+          <img className="mt-2" src="/logo.png" alt="logo" width={150}/>
+          {/* <span className="text-xl font-bold tracking-tight text-foreground font-sans">
             Techyst<span className="text-primary">.ai</span>
-          </span>
+          </span> */}
         </div>
 
         <div className="flex items-center gap-4">
