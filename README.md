@@ -80,6 +80,17 @@ Aplikasi ini dibangun dengan prinsip **Performance First** dan **Inclusive Desig
 
 ---
 
+## Video Demo
+
+<div align="center">
+  <video width="100%" controls>
+    <source src="public/demo/techys-demo.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+---
+
 ## Cara Install & Jalankan (Lokal)
 
 Ikuti langkah ini untuk menjalankan Techyst di komputer lokal Anda.
